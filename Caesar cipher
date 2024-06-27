@@ -1,0 +1,28 @@
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
+
+direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+text = input("Type your message:\n").lower()
+shift = int(input("Type the shift number:\n"))
+
+def caesar_cipher(input_text, shift_amount, direction):
+    cipher_text = ""
+    for letter in input_text:
+        if letter in alphabet:
+            position = alphabet.index(letter)
+            if direction == 'encode':
+                new_position = (position + shift_amount) % 26
+            elif direction == 'decode':
+                new_position = (position - shift_amount) % 26
+            cipher_text += alphabet[new_position]
+        else:
+            cipher_text += letter  # for non-alphabet characters
+    return cipher_text
+
+if direction == 'encode':
+    encrypted_text = caesar_cipher(text, shift, 'encode')
+    print(f"The encoded text is {encrypted_text}")
+elif direction == 'decode':
+    decrypted_text = caesar_cipher(text, shift, 'decode')
+    print(f"The decoded text is {decrypted_text}")
+else:
+    print("Invalid input for direction. Please type 'encode' or 'decode'.")
