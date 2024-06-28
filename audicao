@@ -1,0 +1,43 @@
+import os
+
+def clear_console():
+    # Limpa o console usando ANSI escape sequences
+    if os.name == 'posix':  # Verifica se o sistema é Unix/Linux/MacOS
+        _ = os.system('clear')
+    else:  # Caso contrário, presume-se que o sistema seja Windows
+        _ = os.system('cls')
+
+def audicao():
+    while True:
+        ofertas = []  # Inicializa a lista para armazenar tuplas (nome, valor_oferta)
+
+        while True:
+            clear_console()  # Limpa o console antes de pedir entrada novamente
+            nome = input("Qual é seu nome? ")  # Obtém o nome do usuário
+            valor = float(input("Qual é sua oferta? "))  # Obtém a oferta do usuário
+            ofertas.append((nome, valor))  # Adiciona a oferta à lista
+
+            quantidade = input("Alguém mais está jogando? (S/N): ").upper()  # Verifica se alguém mais está jogando
+
+            if quantidade != 'S':
+                break  # Sai do loop interno se a resposta não for 'S'
+
+            # Limpa a lista de ofertas se alguém responder 'S'
+            ofertas = []
+
+        # Determina o vencedor com a maior oferta
+        vencedor = max(ofertas, key=lambda x: x[1])  # x[1] representa o valor da oferta
+
+        clear_console()  # Limpa o console antes de mostrar os resultados da audição
+        print("\nResultados da audição:")
+        for nome, valor in ofertas:
+            if nome == vencedor[0]:
+                print(f"{nome} - Vencedor com uma oferta de R$ {valor:.2f}")
+            else:
+                print(f"{nome} - Oferta registrada, mas não venceu.")
+
+        continuar = input("Deseja iniciar uma nova audição? (S/N): ").upper()
+        if continuar != 'S':
+            break  # Sai do loop externo se a resposta não for 'S'
+
+audicao()
